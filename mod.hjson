@@ -1,0 +1,6 @@
+name: testers
+displayName: Testers
+author: [roya]sk7725[]
+description: Adds various testers for easier mod development.
+version: 0.1
+minGameVersion: 105
