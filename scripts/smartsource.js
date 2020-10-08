@@ -36,7 +36,7 @@ smartsource.buildType = () => {
 
         if(itemCache[otherBlock.block.name] != undefined){
           for(var j=0; j<itemCache[otherBlock.block.name].length; j++){
-            /*if(this._proxItems.indexOf(itemCache[otherBlock.block.name][j]) < 0)*/ this._proxItems.push(itemCache[otherBlock.block.name][j]);
+            if(this._proxItems.indexOf(itemCache[otherBlock.block.name][j]) < 0) this._proxItems.push(itemCache[otherBlock.block.name][j]);
           }
           continue;
         }
@@ -46,7 +46,7 @@ smartsource.buildType = () => {
         var otherCons = otherBlock.block.consumes.getItem();
         for(var k=0; k<otherCons.items.length; k++){
           var itemCons = otherCons.items[k].item;
-          /*if(this._proxItems.indexOf(itemCons) < 0)*/ this._proxItems.push(itemCons);
+          if(this._proxItems.indexOf(itemCons) < 0) this._proxItems.push(itemCons);
           itemCache[otherBlock.block.name].push(itemCons);
         }
       }
