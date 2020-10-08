@@ -56,3 +56,23 @@ smartsource.buildType = () => {
     }
   });
 }
+
+
+const smartliquid = extendContent(Block, "smartliquid", {
+  init(){
+    this.super$init();
+    this.liqArr = Vars.content.liquids().toArray();
+  }
+});
+
+smartliquid.buildType = () => {
+  return extend(Building, {
+    updateTile(){
+      //just cycle through all liquids because there are much less liquids than items(if not, you are doing something horribly wrong).
+      for(var i=0; i<smartliquid.liqArr.length; i++){
+        this.liquids.add(smartliquid.liqArr[i], smartliquid.liquidCapacity);
+        this.dumpLiquid(smartliquid.liqArr[i]);
+      }
+    }
+  });
+}

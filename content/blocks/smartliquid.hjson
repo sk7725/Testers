@@ -5,3 +5,10 @@ buildVisibility: "sandboxOnly"
 
 rotate: false
 configurable: false
+
+hasLiquids: true
+liquidCapacity: 100
+outputsLiquid: true
+update: true
+solid: true
+noUpdateDisabled: true
