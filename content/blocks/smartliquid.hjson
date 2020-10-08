@@ -12,3 +12,4 @@ outputsLiquid: true
 update: true
 solid: true
 noUpdateDisabled: true
+displayFlow: false

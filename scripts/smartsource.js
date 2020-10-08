@@ -19,8 +19,8 @@ smartsource.buildType = () => {
       if(this._proxItems.length > 0){
         for(var i=0; i<this._proxItems.length; i++){
           this.items.set(this._proxItems[i], 1);
-          //this.dump(this._proxItems[i]);
-          this.offload(this._proxItems[i]);
+          this.dump(this._proxItems[i]);
+          //this.offload(this._proxItems[i]); THX Anuke!
         }
         this.items.clear();
       }

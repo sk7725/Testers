@@ -1,6 +1,6 @@
 name: testers
 displayName: "Testers"
 author: "[royal]sk7725[]"
-description: "Adds various testers for easier mod development."
-version: 0.1
+description: "Adds various testers for easier mod development.\n[scarlet]Requires BE 10302 or higher.[]"
+version: 0.15
 minGameVersion: 105
