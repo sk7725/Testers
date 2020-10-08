@@ -6,7 +6,7 @@ const testerjs = extendContent(MessageBlock, "testerjs", {
 testerjs.config(Integer, (build, value) => {
   if(value != 1) return;
   try{
-    eval(build.message.toString());
+    (() => eval(build.message.toString()))();
     build.noError();
   }
   catch(err){
@@ -87,7 +87,61 @@ testerdraw.buildType = () => {
       }
 
       try{
-        eval(this.message.toString());
+        (() => eval(this.message.toString()))();
+        this._haserr = false;
+      }
+      catch(err){
+        this._err = err;
+        this._haserr = true;
+      }
+    },
+    updateTableAlign(table){
+      if(!this._haserr) this.super$updateTableAlign(table);
+      else{
+        const pos = Core.input.mouseScreen(this.x + Vars.tilesize / 2 + 1, this.y);
+        table.setPosition(pos.x, pos.y, Align.left);
+      }
+    }
+  });
+}
+
+
+const testerdrawclear = extendContent(MessageBlock, "testerdrawclear", {
+});
+
+testerdrawclear.buildType = () => {
+  return extendContent(MessageBlock.MessageBuild, testerdrawclear, {
+    _haserr: false,
+    _err: "",
+
+    setError(err){
+      this._err = err;
+      this._haserr = true;
+    },
+    noError(){
+      this._haserr = false;
+    },
+
+    draw(){
+      if(this.message == null || this.message.length() == 0){
+        this.super$draw();
+        if(this._haserr){
+          Draw.z(Layer.endPixeled);
+          testerdrawclear.drawPlaceText(this._err, this.tile.x, this.tile.y, false);
+          Draw.reset();
+        }
+        return;
+      }
+
+      if(this._haserr){
+        this.super$draw();
+        Draw.z(Layer.endPixeled);
+        testerdrawclear.drawPlaceText(this._err, this.tile.x, this.tile.y, false);
+        Draw.reset();
+      }
+
+      try{
+        (() => eval(this.message.toString()))();
         this._haserr = false;
       }
       catch(err){
@@ -125,7 +179,7 @@ testertable.buildType = () => {
         var cont = testertable.dialog.cont;//to be used in the eval
 
         try{
-          eval(this.message.toString());
+          (() => eval(this.message.toString()))();
           testertable.dialog.show();
           this._haserr = false;
         }
@@ -167,7 +221,7 @@ testertable.buildType = () => {
 const evalFx = new Effect(30, e => {
   if(e.data == null || !e.data.text || !e.data.parent) return;
   try{
-    eval(e.data.text);
+    (() => eval(e.data.text))();
   }
   catch(err){
     if(e.data.parent.isValid()) e.data.parent.setError(err);
@@ -177,7 +231,7 @@ const evalFx = new Effect(30, e => {
 const evalFxLong = new Effect(90, e => {
   if(e.data == null || !e.data.text || !e.data.parent) return;
   try{
-    eval(e.data.text);
+    (() => eval(e.data.text))();
   }
   catch(err){
     if(e.data.parent.isValid()) e.data.parent.setError(err);

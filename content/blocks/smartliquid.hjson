@@ -1,0 +1,7 @@
+size: 1
+category: "liquid"
+health: 40
+buildVisibility: "sandboxOnly"
+
+rotate: false
+configurable: false

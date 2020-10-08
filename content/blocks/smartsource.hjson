@@ -1,0 +1,13 @@
+size: 1
+category: "distribution"
+health: 40
+buildVisibility: "sandboxOnly"
+
+rotate: false
+configurable: false
+
+hasItems: true
+update: true
+solid: true
+group: transportation
+noUpdateDisabled: true

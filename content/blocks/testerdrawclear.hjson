@@ -1,0 +1,10 @@
+size: 1
+category: "logic"
+health: 1024
+buildVisibility: "sandboxOnly"
+
+rotate: false
+configurable: true
+maxNewlines: 255
+maxTextLength: 30000
+hasShadow: false
