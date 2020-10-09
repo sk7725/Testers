@@ -1,3 +1,4 @@
+require("testers/readers");
 require("testers/testerblocks");
 require("testers/smartsource");
 

@@ -1,5 +1,8 @@
 const Integer = java.lang.Integer;
 
+this.global.tmpCont = [];
+var t = this;
+
 function evalStr(str, e){
   eval(str);
 }
@@ -192,8 +195,18 @@ testertable.buildType = () => {
       this.super$buildConfiguration(table);
       const tbutton = table.button(Icon.star, () => {
         testertable.dialog.cont.clear();
-        var cont = testertable.dialog.cont;//to be used in the eval
-
+        //var cont = testertable.dialog.cont;//to be used in the eval
+        t.global.tmpCont[this.id] = testertable.dialog.cont;
+        const ret = Vars.mods.getScripts().runConsole("var cont = t.global.tmpCont["+this.id+"];\n"+this.message.toString());
+        if(ret.indexOf("Error") > -1){
+          this._err = err;
+          this._haserr = true;
+        }
+        else{
+          testertable.dialog.show();
+          this._haserr = false;
+        }
+        /*
         try{
           (() => eval(this.message.toString()))();
           testertable.dialog.show();
@@ -202,7 +215,7 @@ testertable.buildType = () => {
         catch(err){
           this._err = err;
           this._haserr = true;
-        }
+        }*/
       }).size(40).get();
       tbutton.setDisabled(Vars.net.active());//some players may try to stick working, non-visual code in this block wtf
     },
