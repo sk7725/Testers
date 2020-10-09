@@ -1,23 +1,33 @@
 const Integer = java.lang.Integer;
 
+function evalStr(str, e){
+  eval(str);
+}
+
 const testerjs = extendContent(MessageBlock, "testerjs", {
 });
 
 testerjs.config(Integer, (build, value) => {
   if(value != 1) return;
+  const ret = Vars.mods.getScripts().runConsole(build.message.toString());
+  if(ret.indexOf("Error") > -1) build.criticalError(ret);
+  else if(ret != "undefined" && ret != undefined) build.setError(ret);
+  else build.noError();
+  /*
   try{
-    (() => eval(build.message.toString()))();
+    Vars.mods.getScripts().runConsole(build.message.toString());
     build.noError();
   }
   catch(err){
     build.setError(err);
-  }
+  }*/
 });
 
 testerjs.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, testerjs, {
     _haserr: false,
     _err: "",
+    _crit: false,
     buildConfiguration(table){
       this.super$buildConfiguration(table);
       table.button(Icon.star, () => {
@@ -28,6 +38,12 @@ testerjs.buildType = () => {
     setError(err){
       this._err = err;
       this._haserr = true;
+      this._crit = false;
+    },
+    criticalError(err){
+      this._err = err;
+      this._haserr = true;
+      this._crit = true;
     },
     noError(){
       this._haserr = false;
@@ -37,7 +53,7 @@ testerjs.buildType = () => {
       this.super$draw();
       if(this._haserr){
         Draw.z(Layer.endPixeled);
-        testerjs.drawPlaceText(this._err, this.tile.x, this.tile.y, false);
+        testerjs.drawPlaceText(this._err, this.tile.x, this.tile.y, !this._crit);
         Draw.reset();
       }
     },
@@ -221,7 +237,7 @@ testertable.buildType = () => {
 const evalFx = new Effect(30, e => {
   if(e.data == null || !e.data.text || !e.data.parent) return;
   try{
-    (() => eval(e.data.text))();
+    evalStr(e.data.text, e);
   }
   catch(err){
     if(e.data.parent.isValid()) e.data.parent.setError(err);
@@ -231,7 +247,7 @@ const evalFx = new Effect(30, e => {
 const evalFxLong = new Effect(90, e => {
   if(e.data == null || !e.data.text || !e.data.parent) return;
   try{
-    (() => eval(e.data.text))();
+    evalStr(e.data.text, e);
   }
   catch(err){
     if(e.data.parent.isValid()) e.data.parent.setError(err);

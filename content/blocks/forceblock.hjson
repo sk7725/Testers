@@ -1,0 +1,16 @@
+size: 1
+category: "effect"
+health: 200
+
+rotate: false
+configurable: false
+update: true
+hasShadow: false
+solid: false
+buildCostMultiplier: 0
+expanded: true
+
+requirements: [
+  phase-fabric/2
+]
+research: "force-projector"
