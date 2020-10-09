@@ -9,6 +9,11 @@ hasShadow: false
 solid: false
 buildCostMultiplier: 0
 expanded: true
+rebuildable: false
+drawDisabled: false
+alwaysReplace: true
+breakSound: "none"
+targetable: false
 
 requirements: [
   phase-fabric/2

@@ -1,7 +1,7 @@
 const breakEffect = new Effect(40, e => {
   Draw.color(e.color);
   Lines.stroke(3 * e.fout());
-  Lines.poly(e.x, e.y, 4, 4 + e.fin());
+  Lines.square(e.x, e.y, 4 + e.fin());
 });
 
 const smallEffect = new Effect(60, e => {
@@ -56,6 +56,10 @@ forceblock.buildType = () => {
       breakEffect.at(this.x, this.y, this.team.color);
       if(Core.settings.getBool("animatedshields")) smallEffect.at(this.x, this.y, this.team.color);
       else rectEffect.at(this.x, this.y, this.team.color);
+    },
+    drawCracks(){
+      return;
+      //h
     }
   });
 }
