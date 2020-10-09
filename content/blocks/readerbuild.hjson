@@ -5,5 +5,5 @@ buildVisibility: "sandboxOnly"
 
 rotate: true
 configurable: true
-maxNewlines: 3
-maxTextLength: 500
+maxNewlines: 100
+maxTextLength: 800

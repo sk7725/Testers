@@ -197,9 +197,9 @@ testertable.buildType = () => {
         testertable.dialog.cont.clear();
         //var cont = testertable.dialog.cont;//to be used in the eval
         t.global.tmpCont[this.id] = testertable.dialog.cont;
-        const ret = Vars.mods.getScripts().runConsole("var cont = t.global.tmpCont["+this.id+"];\n"+this.message.toString());
+        const ret = Vars.mods.getScripts().runConsole("var cont = this.global.tmpCont["+this.id+"];\n"+this.message.toString());
         if(ret.indexOf("Error") > -1){
-          this._err = err;
+          this._err = ret;
           this._haserr = true;
         }
         else{
