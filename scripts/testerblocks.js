@@ -180,8 +180,8 @@ testerdrawclear.buildType = () => {
 
 
 const testertable = extendContent(MessageBlock, "testertable", {
-  init(){
-    this.super$init();
+  load(){
+    this.super$load();
     this.dialog = new BaseDialog("Dialog");
     this.dialog.addCloseButton();
   }
