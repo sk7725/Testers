@@ -109,7 +109,7 @@ readerbuild.buildType = () => {
             continue;
           };
           str += arr[i];
-          str += (front[arr[i]] == null)?(": [lightgray]null[]"):(": [accent]" + front[arr[i]] + "[]");
+          str += (front[arr[i]] == null)?(": [lightgray]null[]"):(((typeof front[arr[i]]) === "object")?": [coral]" + front[arr[i]] + "[]":": [accent]" + front[arr[i]] + "[]");
           if(i < arr.length - 1) str += "\n";
         }
         catch(ignore){
