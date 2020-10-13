@@ -123,12 +123,34 @@ unitSpawner.buildType = () => {
         t.top();
       }));
       //s1.setHeight(540);
-      const s2 = new Table(cons(t => {
-        t.visibility = boolp(() => this._uiMode == 2);
-        t.add("hhhhh");
-        t.top();
+      const s2 = new Table(cons(tb => {
+        tb.visibility = boolp(() => this._uiMode == 2);
+        tb.table(Styles.black6, cons(t => {
+          t.add().pad(2.5);
+          t.row();
+          t.add(new Label(prov(() => "X: "+this.getUnitX()/Vars.tilesize)));
+          t.button("-", Styles.transt, () => {
+            if(this.getUnitX() - Vars.tilesize >= 0) this.setUnitX(this.getUnitX() - Vars.tilesize);
+          }).size(30);
+          t.button("+", Styles.transt, () => {
+            if(this.getUnitX() + Vars.tilesize < Vars.world.width() * Vars.tilesize) this.setUnitX(this.getUnitX() + Vars.tilesize);
+          }).size(30);
+          t.row();
+          t.add().pad(5);
+          t.row();
+          t.add(new Label(prov(() => "Y: "+this.getUnitY()/Vars.tilesize)));
+          t.button("-", Styles.transt, () => {
+            if(this.getUnitY() - Vars.tilesize >= 0) this.setUnitY(this.getUnitY() - Vars.tilesize);
+          }).size(30);
+          t.button("+", Styles.transt, () => {
+            if(this.getUnitY() + Vars.tilesize < Vars.world.height() * Vars.tilesize) this.setUnitY(this.getUnitY() + Vars.tilesize);
+          }).size(30);
+          t.row();
+          t.add().pad(2.5);
+          t.top();
+        })).height(80).width(170);
+        tb.top();
       }));
-      //s2.setHeight(540);
 
       table.row();
       table.stack(s0, s1, s2).align(Align.top).top();
