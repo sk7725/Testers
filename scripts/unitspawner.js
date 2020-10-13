@@ -105,9 +105,17 @@ unitSpawner.buildType = () => {
 
       const s0 = new Table(cons(t => {
         t.visibility = boolp(() => this._uiMode == 0);
-        ItemSelection.buildTable(t, Vars.content.units(), prov(() => this.getUnit()), cons(u => {
-          if(u != null) this.setUnit(u.id);
-        }));
+        try{
+          ItemSelection.buildTable(t, Vars.content.units(), prov(() => this.getUnit()), cons(u => {
+            if(u != null) this.setUnit(u.id);
+          }), false);
+        }
+        catch(versionTooLow){
+          ItemSelection.buildTable(t, Vars.content.units(), prov(() => this.getUnit()), cons(u => {
+            if(u != null) this.setUnit(u.id);
+          }));
+        }
+
       }));
       const s1 = new Table(cons(t => {
         t.visibility = boolp(() => this._uiMode == 1);
