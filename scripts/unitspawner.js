@@ -1,7 +1,7 @@
 const unitSpawner = extendContent(MessageBlock, "summonunit", {});
 unitSpawner.size = 1;
 unitSpawner.solid = false;
-unitSpawner.requirements = ItemStack.with(Items.copper, 2, Items.lead, 4);
+//unitSpawner.requirements = ItemStack.with(Items.copper, 2, Items.lead, 4);
 unitSpawner.buildVisibility = BuildVisibility.sandboxOnly;
 unitSpawner.category = Category.logic;
 unitSpawner.configurable = true;

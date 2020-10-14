@@ -1,0 +1,9 @@
+size: 1
+category: "logic"
+health: 40
+buildVisibility: "sandboxOnly"
+
+rotate: false
+configurable: true
+solid: true
+update: true
