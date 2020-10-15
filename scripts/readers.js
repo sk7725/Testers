@@ -202,8 +202,8 @@ readeremote.buildType = () => {
     drawSelect(){
       const str = this.message.toString();
       const emote = (Fonts.getUnicode(str)>0)?String.fromCharCode(Fonts.getUnicode(str)) + "":null;
-      if(emote == null) readeremote.drawPlaceText(str + " (??)", this.tile.x, this.tile.y, false);
-      else readeremote.drawPlaceText(str + " (" + emote + ")", this.tile.x, this.tile.y, true);
+      if(emote == null) readeremote.drawPlaceText(str + " [white](??)[]", this.tile.x, this.tile.y, false);
+      else readeremote.drawPlaceText(str + " [white](" + emote + ")[]", this.tile.x, this.tile.y, true);
     },
     updateTableAlign(table){
       const pos = Core.input.mouseScreen(this.x, this.y - Vars.tilesize / 2 - 1);
