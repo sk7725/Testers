@@ -141,3 +141,73 @@ readerbuild.buildType = () => {
     }
   });
 }
+
+
+const readeremote = extendContent(MessageBlock, "readeremote", {
+  load(){
+    this.super$load();
+    this.topRegion = Core.atlas.find("testers-reader-arrow");
+  },
+  drawRequestRegion(req, list){
+    const scl = Vars.tilesize * req.animScale;
+    Draw.rect(this.region, req.drawx(), req.drawy(), scl, scl);
+    Draw.rect(this.topRegion, req.drawx(), req.drawy(), scl, scl, req.rotation * 90);
+  }
+});
+
+readeremote.buildType = () => {
+  return extendContent(MessageBlock.MessageBuild, readeremote, {
+    readTile(){
+      var front = this.tile.getNearby(this.rotation);
+      if(front == null) return;
+      print(front.block());
+      if(front.block() != null && front.block() != Blocks.air) this.configure(front.block().name);
+      else if(front.overlay() != null && front.overlay() != Blocks.air) this.configure(front.overlay().name);
+      else if(front.floor() != null) this.configure(front.floor().name);
+    },
+    copyEmote(str){
+      try{
+        if(Fonts.getUnicode(str)>0){
+          Core.app.setClipboardText(String.fromCharCode(Fonts.getUnicode(str)) + "");
+          Vars.ui.showInfoFade("$info.emote-copy");
+        }
+        else{
+          Vars.ui.showInfoFade(Core.bundle.format("info.emote-fail", str));
+        }
+      }
+      catch(err){
+        Vars.ui.showInfoFade(err);
+      }
+    },
+    buildConfiguration(table){
+      table.button(Icon.refreshSmall, () => {
+        this.readTile();
+      }).size(40);
+      this.super$buildConfiguration(table);
+      table.button(Icon.paste, () => {
+        this.copyEmote(this.message.toString());
+      }).size(40);
+    },
+    placed(){
+      this.super$placed();
+      //note: only is called on the host
+      if(!Vars.net.client()){
+        this.readTile();
+      }
+    },
+    draw(){
+      Draw.rect(readeremote.region, this.x, this.y);
+      Draw.rect(readeremote.topRegion, this.x, this.y, this.rotation * 90);
+    },
+    drawSelect(){
+      const str = this.message.toString();
+      const emote = (Fonts.getUnicode(str)>0)?String.fromCharCode(Fonts.getUnicode(str)) + "":null;
+      if(emote == null) readeremote.drawPlaceText(str + " (??)", this.tile.x, this.tile.y, false);
+      else readeremote.drawPlaceText(str + " (" + emote + ")", this.tile.x, this.tile.y, true);
+    },
+    updateTableAlign(table){
+      const pos = Core.input.mouseScreen(this.x, this.y - Vars.tilesize / 2 - 1);
+      table.setPosition(pos.x, pos.y, Align.top);
+    },
+  });
+}
