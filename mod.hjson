@@ -2,5 +2,5 @@ name: testers
 displayName: "Testers"
 author: "[royal]sk7725[]"
 description: "Adds various testers for easier mod development.\nThanks to: Gdeft"
-version: 0.21
+version: 0.22
 minGameVersion: 105
