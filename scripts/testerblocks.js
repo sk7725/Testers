@@ -1,11 +1,8 @@
 const Integer = java.lang.Integer;
 
 this.global.tmpCont = [];
+this.global.tmpFx = [];
 var t = this;
-
-function evalStr(str, e){
-  eval(str);
-}
 
 const testerjs = extendContent(MessageBlock, "testerjs", {
 });
@@ -198,7 +195,7 @@ testertable.buildType = () => {
         //var cont = testertable.dialog.cont;//to be used in the eval
         t.global.tmpCont[this.id] = testertable.dialog.cont;
         const ret = Vars.mods.getScripts().runConsole("var cont = this.global.tmpCont["+this.id+"];\n"+this.message.toString());
-        if(ret.indexOf("Error") > -1){
+        if(ret.indexOf("Error") > -1 || ret.indexOf("Exception") > -1){
           this._err = ret;
           this._haserr = true;
         }
@@ -249,22 +246,12 @@ testertable.buildType = () => {
 
 const evalFx = new Effect(30, e => {
   if(e.data == null || !e.data.text || !e.data.parent) return;
-  try{
-    evalStr(e.data.text, e);
-  }
-  catch(err){
-    if(e.data.parent.isValid()) e.data.parent.setError(err);
-  }
+  evalStr(e.data.text, e);
 });
 
 const evalFxLong = new Effect(90, e => {
   if(e.data == null || !e.data.text || !e.data.parent) return;
-  try{
-    evalStr(e.data.text, e);
-  }
-  catch(err){
-    if(e.data.parent.isValid()) e.data.parent.setError(err);
-  }
+  evalStr(e.data.text, e);
 });
 
 const testerfx = extendContent(MessageBlock, "testerfx", {
@@ -286,6 +273,16 @@ testerfx.config(Integer, (build, value) => {
     build.toggleLength();
   }
 });
+
+function evalStr(str, e){
+  t.global.tmpFx[e.id] = e;
+  const ret = Vars.mods.getScripts().runConsole("var e = this.global.tmpFx["+e.id+"];\n"+str);
+  if(ret.indexOf("Error") > -1 || ret.indexOf("Exception") > -1){
+    if(e.data.parent.isValid()) e.data.parent.setError(ret);
+    return true;
+  }
+  return false;
+}
 
 testerfx.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, testerfx, {
