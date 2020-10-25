@@ -262,7 +262,7 @@ testertable.buildType = () => {
       tbutton.setDisabled(Vars.net.active());//some players may try to stick working, non-visual code in this block wtf
     },
     drawSelect(){
-      if(!this._buildtype) this.super$drawSelect();
+      if(!this._buildmode) this.super$drawSelect();
     },
 
     read(stream, version){
