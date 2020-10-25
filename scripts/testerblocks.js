@@ -184,12 +184,45 @@ const testertable = extendContent(MessageBlock, "testertable", {
   }
 });
 
+testertable.config(Integer, (build, value) => {
+  if(value == 2){
+    build.toggleMode();
+  }
+});
+
 testertable.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, testertable, {
     _haserr: false,
     _err: "",
+    _buildmode: false,
     buildConfiguration(table){
+      if(this._buildmode){
+        if(Vars.net.active()){
+          table.label("[red]Cannot display custom table in multiplayer![]");
+          table.row();
+          table.image().pad(2).width(130).height(4).color(Color.red);
+          table.row();
+        }
+        else{
+          t.global.tmpCont[this.id] = table;
+          const ret = Vars.mods.getScripts().runConsole("var table = this.global.tmpCont["+this.id+"];\n"+this.message.toString());
+          if(ret.indexOf("Error") > -1 || ret.indexOf("Exception") > -1){
+            this._err = ret;
+            this._haserr = true;
+          }
+          else{
+            this._haserr = false;
+          }
+          table.row();
+          table.image().pad(2).width(130).height(4).color(Pal.accent);
+          table.row();
+        }
+      }
       this.super$buildConfiguration(table);
+      table.button(Icon.refresh, () => {
+        this.configure(new Integer(2));
+      }).size(40);
+      if(this._buildmode) return;
       const tbutton = table.button(Icon.star, () => {
         testertable.dialog.cont.clear();
         //var cont = testertable.dialog.cont;//to be used in the eval
@@ -217,6 +250,21 @@ testertable.buildType = () => {
       tbutton.setDisabled(Vars.net.active());//some players may try to stick working, non-visual code in this block wtf
     },
 
+    read(stream, version){
+      this.super$read(stream, version);
+      this._buildmode = stream.bool();
+    },
+    write(stream){
+      this.super$write(stream);
+      stream.bool(this._buildmode);
+    },
+
+    toggleMode(){
+      this._buildmode = !this._buildmode;
+    },
+    getMode(){
+      return this._buildmode;
+    },
     setError(err){
       this._err = err;
       this._haserr = true;
@@ -234,7 +282,11 @@ testertable.buildType = () => {
       }
     },
     updateTableAlign(table){
-      if(!this._haserr) this.super$updateTableAlign(table);
+      if(this._buildmode){
+        const pos = Core.input.mouseScreen(this.x, this.y - Vars.tilesize / 2 - 1);
+        table.setPosition(pos.x, pos.y, Align.top);
+      }
+      else if(!this._haserr) this.super$updateTableAlign(table);
       else{
         const pos = Core.input.mouseScreen(this.x + Vars.tilesize / 2 + 1, this.y);
         table.setPosition(pos.x, pos.y, Align.left);
