@@ -224,6 +224,7 @@ testertable.buildType = () => {
         table.table(cons(table3 => {
           this.super$buildConfiguration(table3);
           table3.button(Icon.refresh, () => {
+            Vars.control.input.frag.config.hideConfig();
             this.configure(new Integer(2));
           }).size(40);
         }));
@@ -231,6 +232,7 @@ testertable.buildType = () => {
       }
       this.super$buildConfiguration(table);
       table.button(Icon.refresh, () => {
+        Vars.control.input.frag.config.hideConfig();
         this.configure(new Integer(2));
       }).size(40);
       const tbutton = table.button(Icon.star, () => {
