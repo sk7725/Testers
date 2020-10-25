@@ -158,7 +158,7 @@ const readeremote = extendContent(MessageBlock, "readeremote", {
 readeremote.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, readeremote, {
     readTile(){
-      var front = this.tile.getNearby(this.rotation);
+      var front = this.tile.nearby(this.rotation);
       if(front == null) return;
       print(front.block());
       if(front.block() != null && front.block() != Blocks.air) this.configure(front.block().name);
