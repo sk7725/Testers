@@ -204,25 +204,35 @@ testertable.buildType = () => {
           table.row();
         }
         else{
-          t.global.tmpCont[this.id] = table;
-          const ret = Vars.mods.getScripts().runConsole("var table = this.global.tmpCont["+this.id+"];\n"+this.message.toString());
-          if(ret.indexOf("Error") > -1 || ret.indexOf("Exception") > -1){
-            this._err = ret;
-            this._haserr = true;
-          }
-          else{
-            this._haserr = false;
-          }
+          table.table(cons(table2 => {
+            t.global.tmpCont[this.id] = table2;
+            const ret = Vars.mods.getScripts().runConsole("var table = this.global.tmpCont["+this.id+"];\n"+this.message.toString());
+            if(ret.indexOf("Error") > -1 || ret.indexOf("Exception") > -1){
+              this._err = ret;
+              this._haserr = true;
+            }
+            else{
+              this._haserr = false;
+            }
+          }));
           table.row();
           table.image().pad(2).width(130).height(4).color(Pal.accent);
           table.row();
         }
       }
+      if(this._buildmode){
+        table.table(cons(table3 => {
+          this.super$buildConfiguration(table3);
+          table3.button(Icon.refresh, () => {
+            this.configure(new Integer(2));
+          }).size(40);
+        }));
+        return;
+      }
       this.super$buildConfiguration(table);
       table.button(Icon.refresh, () => {
         this.configure(new Integer(2));
       }).size(40);
-      if(this._buildmode) return;
       const tbutton = table.button(Icon.star, () => {
         testertable.dialog.cont.clear();
         //var cont = testertable.dialog.cont;//to be used in the eval
