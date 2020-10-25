@@ -198,7 +198,7 @@ testertable.buildType = () => {
     buildConfiguration(table){
       if(this._buildmode){
         if(Vars.net.active()){
-          table.label("[red]Cannot display custom table in multiplayer![]");
+          table.add("[red]Cannot display custom table in multiplayer![]");
           table.row();
           table.image().pad(2).width(130).height(4).color(Color.red);
           table.row();
