@@ -46,7 +46,7 @@ const readertile = extendContent(MessageBlock, "readertile", {
 readertile.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, readertile, {
     readTile(){
-      var front = this.tile.getNearby(this.rotation);
+      var front = this.tile.nearby(this.rotation);
       if(front != null) this.configure(front.toString());
     },
     buildConfiguration(table){
