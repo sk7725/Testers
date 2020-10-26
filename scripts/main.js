@@ -4,6 +4,7 @@ require("testers/smartsource");
 require("testers/unitspawner");
 require("testers/summonweather");
 
+//require("testers/shaderscreen");
 require("testers/forceblock");
 
 try{

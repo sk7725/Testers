@@ -42,13 +42,15 @@ smartsource.buildType = () => {
         }
 
         itemCache[otherBlock.block.name] = [];
-
-        var otherCons = otherBlock.block.consumes.getItem();
-        for(var k=0; k<otherCons.items.length; k++){
-          var itemCons = otherCons.items[k].item;
-          /*if(this._proxItems.indexOf(itemCons) < 0)*/ this._proxItems.push(itemCons);
-          itemCache[otherBlock.block.name].push(itemCons);
+        try{
+          var otherCons = otherBlock.block.consumes.getItem();
+          for(var k=0; k<otherCons.items.length; k++){
+            var itemCons = otherCons.items[k].item;
+            /*if(this._proxItems.indexOf(itemCons) < 0)*/ this._proxItems.push(itemCons);
+            itemCache[otherBlock.block.name].push(itemCons);
+          }
         }
+        catch(toBeFixedLater){}
       }
       //print("ProxItems: "+this._proxItems);
 
