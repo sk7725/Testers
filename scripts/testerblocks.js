@@ -4,6 +4,57 @@ this.global.tmpCont = [];
 this.global.tmpFx = [];
 var t = this;
 
+function linesStr(first, len, now){
+  var str = "[lightgray]";
+  for(var i=0; i<len; i++){
+    if(i+first == now) str += "[accent]";
+    str += (i+first+1)+"";
+    if(i+first == now) str += "[]";
+    if(i<len-1) str+="\n";
+  }
+  return str+"[]";
+}
+
+function makeCodeScreen(build, table, maxtext, maxlines, block){
+  table.button(Icon.pencil, () => {
+    var dialog = new BaseDialog("@editmessage");
+    dialog.setFillParent(false);
+    dialog.cont.add(new Label(prov(() => linesStr(a.getFirstLineShowing(), a.getLinesShowing(), a.getCursorLine())+""))).padBottom(20);
+    var a = dialog.cont.add(new TextArea(build.message.toString().replace(/\n/g, "\r"))).size(1000, Core.graphics.getHeight() - 120).get();
+
+    a.setFilter((textField, c) => {
+      if(c == '\n' || c == '\r'){
+        var count = 0;
+        for(var i = 0; i < textField.getText().length; i++){
+          if(textField.getText().charAt(i) == '\n' || textField.getText().charAt(i) == '\r'){
+              count++;
+          }
+        }
+        return count < maxlines;
+      }
+      return true;
+    });
+
+    a.setMaxLength(maxtext);
+    dialog.buttons.button("@ok", Icon.save, () => {
+      build.configure(a.getText());
+      dialog.hide();
+    }).grow();
+    dialog.buttons.button("@uiscale.cancel", Icon.left, () => {
+      dialog.hide();
+    }).size(210, 64);
+
+    dialog.update(() => {
+      if(build.tile.block() != block){
+        dialog.hide();
+      }
+    });
+
+    dialog.show();
+    build.deselect();
+  }).size(40);
+}
+
 const testerjs = extendContent(MessageBlock, "testerjs", {
 });
 
@@ -29,7 +80,8 @@ testerjs.buildType = () => {
     _err: "",
     _crit: false,
     buildConfiguration(table){
-      this.super$buildConfiguration(table);
+      if(Vars.mobile) this.super$buildConfiguration(table);
+      else makeCodeScreen(this, table, testerjs.maxTextLength, testerjs.maxNewlines, testerjs);
       table.button(Icon.star, () => {
         this.configure(new Integer(1));
       }).size(40);
@@ -75,6 +127,11 @@ testerdraw.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, testerdraw, {
     _haserr: false,
     _err: "",
+
+    buildConfiguration(table){
+      if(Vars.mobile) this.super$buildConfiguration(table);
+      else makeCodeScreen(this, table, testerdraw.maxTextLength, testerdraw.maxNewlines, testerdraw);
+    },
 
     setError(err){
       this._err = err;
@@ -129,6 +186,11 @@ testerdrawclear.buildType = () => {
   return extendContent(MessageBlock.MessageBuild, testerdrawclear, {
     _haserr: false,
     _err: "",
+
+    buildConfiguration(table){
+      if(Vars.mobile) this.super$buildConfiguration(table);
+      else makeCodeScreen(this, table, testerdrawclear.maxTextLength, testerdrawclear.maxNewlines, testerdrawclear);
+    },
 
     setError(err){
       this._err = err;
@@ -222,7 +284,8 @@ testertable.buildType = () => {
       }
       if(this._buildmode){
         table.table(cons(table3 => {
-          this.super$buildConfiguration(table3);
+          if(Vars.mobile) this.super$buildConfiguration(table3);
+          else makeCodeScreen(this, table3, testertable.maxTextLength, testertable.maxNewlines, testertable);
           table3.button(Icon.refresh, () => {
             Vars.control.input.frag.config.hideConfig();
             this.configure(new Integer(2));
@@ -230,7 +293,8 @@ testertable.buildType = () => {
         }));
         return;
       }
-      this.super$buildConfiguration(table);
+      if(Vars.mobile) this.super$buildConfiguration(table);
+      else makeCodeScreen(this, table, testertable.maxTextLength, testertable.maxNewlines, testertable);
       table.button(Icon.refresh, () => {
         Vars.control.input.frag.config.hideConfig();
         this.configure(new Integer(2));
@@ -357,7 +421,8 @@ testerfx.buildType = () => {
     _err: "",
     _long: false,
     buildConfiguration(table){
-      this.super$buildConfiguration(table);
+      if(Vars.mobile) this.super$buildConfiguration(table);
+      else makeCodeScreen(this, table, testerfx.maxTextLength, testerfx.maxNewlines, testerfx);
       const lbutton = table.button((this._long)?Icon.commandRally:Icon.commandRallySmall, () => {
         lbutton.replaceImage(new Image((!this._long)?Icon.commandRally:Icon.commandRallySmall));
         this.configure(new Integer(2));
