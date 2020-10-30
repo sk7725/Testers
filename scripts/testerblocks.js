@@ -21,13 +21,13 @@ function makeCodeScreen(build, table, maxtext, maxlines, block){
     dialog.setFillParent(false);
     var l = dialog.cont.add(new Label(prov(() => linesStr(a.getFirstLineShowing(), a.getLinesShowing(), a.getCursorLine())+""))).padBottom(20).get();
     l.setAlignment(Align.right);
-    var a = dialog.cont.add(new TextArea(build.message.toString().replace(/\n/g, "\r"))).size(1000, Core.graphics.getHeight() - 120).get();
+    var a = dialog.cont.add(new TextArea(build.message.toString().replace(/\r/g, "\n"))).size(1000, Core.graphics.getHeight() - 120).get();
 
     a.setFilter((textField, c) => {
-      if(c == '\n' || c == '\r'){
+      if(c == '\n'){
         var count = 0;
         for(var i = 0; i < textField.getText().length; i++){
-          if(textField.getText().charAt(i) == '\n' || textField.getText().charAt(i) == '\r'){
+          if(textField.getText().charAt(i) == '\n'){
               count++;
           }
         }
