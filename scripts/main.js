@@ -8,7 +8,7 @@ require("testers/summonweather");
 require("testers/forceblock");
 
 try{
-  Vars.addCliffButton = true;
+  Vars.experimental = true;
 }
 catch(versionTooLow){}
 
