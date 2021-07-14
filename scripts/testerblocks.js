@@ -1,4 +1,4 @@
-const Integer = java.lang.Integer;
+importPackage(java.lang);
 
 this.global.tmpCont = [];
 this.global.tmpFx = [];
