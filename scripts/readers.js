@@ -1,3 +1,5 @@
+importPackage(java.lang);
+
 const readerpos = extendContent(MessageBlock, "readerpos", {
   load(){
     this.super$load();
@@ -67,9 +69,6 @@ readertile.buildType = () => {
     }
   });
 }
-
-
-const Integer = java.lang.Integer;
 
 const readerbuild = extendContent(MessageBlock, "readerbuild", {
   load(){
