@@ -1,5 +1,4 @@
-const Integer = java.lang.Integer;
-const Float = java.lang.Float;
+importPackage(java.lang);
 
 const weatherSpawner = extendContent(Block, "summonweather", {
 });
