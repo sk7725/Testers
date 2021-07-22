@@ -240,10 +240,14 @@ testerdrawclear.buildType = () => {
 
 
 const testertable = extendContent(MessageBlock, "testertable", {
-  load(){
-    this.super$load();
-    this.dialog = new BaseDialog("Dialog");
-    this.dialog.addCloseButton();
+  init(){
+    this.super$init();
+    Events.on(ClientLoadEvent, e => {
+      Core.app.post(() => {
+        this.dialog = new BaseDialog("Dialog");
+        this.dialog.addCloseButton();
+      });
+    });
   }
 });
 
