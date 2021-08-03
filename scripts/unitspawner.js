@@ -1,3 +1,4 @@
+const Label = arc.scene.ui.label; //ambiguous import my ass
 const unitSpawner = extendContent(MessageBlock, "summonunit", {});
 unitSpawner.size = 1;
 unitSpawner.solid = false;
