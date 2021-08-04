@@ -1,4 +1,4 @@
-const Label = arc.scene.ui.Label; //ambiguous import my ass
+const LabelC = Packages.arc.scene.ui.Label; //ambiguous import my ass
 const unitSpawner = extendContent(MessageBlock, "summonunit", {});
 unitSpawner.size = 1;
 unitSpawner.solid = false;
@@ -137,7 +137,7 @@ unitSpawner.buildType = () => {
         tb.table(Styles.black6, cons(t => {
           t.add().pad(2.5);
           t.row();
-          t.add(new Label(prov(() => "X: "+this.getUnitX()/Vars.tilesize)));
+          t.add(new LabelC(prov(() => "X: "+this.getUnitX()/Vars.tilesize)));
           t.button("-", Styles.transt, () => {
             if(this.getUnitX() - Vars.tilesize >= 0) this.setUnitX(this.getUnitX() - Vars.tilesize);
           }).size(30);
@@ -147,7 +147,7 @@ unitSpawner.buildType = () => {
           t.row();
           t.add().pad(5);
           t.row();
-          t.add(new Label(prov(() => "Y: "+this.getUnitY()/Vars.tilesize)));
+          t.add(new LabelC(prov(() => "Y: "+this.getUnitY()/Vars.tilesize)));
           t.button("-", Styles.transt, () => {
             if(this.getUnitY() - Vars.tilesize >= 0) this.setUnitY(this.getUnitY() - Vars.tilesize);
           }).size(30);
