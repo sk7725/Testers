@@ -1,4 +1,4 @@
-const LabelC = Packages.arc.scene.ui.Label; //ambiguous import my ass
+let LabelC = Packages.arc.scene.ui.Label; //ambiguous import my ass
 const unitSpawner = extendContent(MessageBlock, "summonunit", {});
 unitSpawner.size = 1;
 unitSpawner.solid = false;
