@@ -1,4 +1,5 @@
 importPackage(java.lang);
+let LabelC = Packages.arc.scene.ui.Label;
 
 this.global.tmpCont = [];
 this.global.tmpFx = [];
@@ -19,7 +20,7 @@ function makeCodeScreen(build, table, maxtext, maxlines, block){
   table.button(Icon.pencil, () => {
     var dialog = new BaseDialog("@editmessage");
     dialog.setFillParent(false);
-    var l = dialog.cont.add(new Label(prov(() => linesStr(a.getFirstLineShowing(), a.getLinesShowing(), a.getCursorLine())+""))).padBottom(20).get();
+    var l = dialog.cont.add(new LabelC(prov(() => linesStr(a.getFirstLineShowing(), a.getLinesShowing(), a.getCursorLine())+""))).padBottom(20).get();
     l.setAlignment(Align.right);
     var a = dialog.cont.add(new TextArea(build.message.toString().replace(/\r/g, "\n"))).size(1000, Core.graphics.getHeight() - 120).get();
 
