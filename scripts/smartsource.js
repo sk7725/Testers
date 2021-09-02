@@ -32,7 +32,7 @@ smartsource.buildType = () => {
       this._proxItems = [];
       for(var i=0; i<4; i++){
         var otherBlock = Vars.world.build(this.tile.x + edges[i][0], this.tile.y + edges[i][1]);
-        if(otherBlock == null || otherBlock.block.update == false || !otherBlock.block.consumes.has(ConsumeType.item) || (otherBlock instanceof Turret.TurretBuild)) continue;
+        if(otherBlock == null || otherBlock.block == null || otherBlock.block.update == false || !otherBlock.block.consumes.has(ConsumeType.item) || (otherBlock instanceof Turret.TurretBuild)) continue;
 
         if(itemCache[otherBlock.block.name] != undefined){
           for(var j=0; j<itemCache[otherBlock.block.name].length; j++){
